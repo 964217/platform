@@ -1,0 +1,105 @@
+<!--
+
+    Copyright © 2016-2021 The Thingsboard Authors
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<mat-drawer-container class="tb-absolute-fill">
+    <mat-drawer-content>
+        <div class="mat-padding tb-entity-table tb-absolute-fill">
+            <div fxLayout="column" class="mat-elevation-z1 tb-entity-table-content assetsbg">
+                <mat-card-title class="m-auto pt-5">
+                    <span translate class="mat-headline guest-headline">Rooms Lookup</span>
+                </mat-card-title>
+
+                <div class="searchSection pt-5 pl-5 pb-4 ml-auto">
+                    <mat-form-field fxFlex floatLabel="always" style="width: 90%;">
+                        <mat-label></mat-label>
+                        <input class="pt-3" #searchInput matInput [(ngModel)]="searchText"
+                            placeholder="{{ 'common.enter-searchroom' | translate }}" />
+                    </mat-form-field>
+                    <button class="pt-3" mat-icon-button (click)="searchbyRoom(searchText)" [disabled]="!searchText">
+                        <mat-icon class="material-icons">search</mat-icon>
+                    </button>
+                </div>
+
+                <div class="p-3 mx-5 rounded bg-white shadow-sm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card total-rooms">
+                                <h5 class="card-header mt-0 text-center">Total Rooms </h5>
+                                <div class="card-body">
+                                    <h5 class="card-title"></h5>
+                                    <h1 class="card-text text-center">
+                                        {{totalRoom}}
+                                    </h1>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card total-rooms">
+                                <h5 class="card-header mt-0 text-center">Available Rooms </h5>
+                                <div class="card-body">
+                                    <h5 class="card-title"></h5>
+                                    <h1 class="card-text text-center">
+                                        {{avaliableRoom}}
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card total-rooms">
+                                <h5 class="card-header mt-0 text-center">Assigned Rooms </h5>
+                                <div class="card-body">
+                                    <h5 class="card-title"></h5>
+                                    <h1 class="card-text text-center">
+                                        {{assignedRoom}}
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 mx-5 rounded searchDetails shadow-sm my-4">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Room</th>
+                                <th>Room Type</th>
+                                <th scope="col">Assigned to (Guest)</th>
+                                <th scope="col">Created Date</th>
+                                <th>Availability</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="isFound">
+                                <span class="noData">No Data Available</span>
+                            </tr>
+                            <tr *ngFor="let assest of roomDetails">
+                                <td>{{assest.name}}</td>
+                                <td>{{assest.type}}</td>
+                                <td>{{assest.customerTitle}}</td>
+                                <td>{{assest.createdTime | date:'dd/MM/yyyy h:mm'}}</td>
+                                <td>{{assest.customerTitle == null ? 'Available' : 'Not Available'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
